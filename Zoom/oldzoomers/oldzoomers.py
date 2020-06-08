@@ -145,7 +145,7 @@ if __name__ == "__main__":
     try:
         last_login_days_setting
     except NameError:
-        print("variable last_login_days_setting not defined")
+        print("variable last_login_days_setting not defined. moving on!")
     else:
         # Create variable with current date+time
         output_filename = '{}.csv'.format( datetime.now().strftime('%Y%m%d%H%M%S') )
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     try:
         csv_input_file
     except NameError:
-        print("variable csv_input_file not defined")
+        print("variable csv_input_file not defined. moving on!")
     else:
         with open(csv_input_file, newline='') as csvfile:
             reader = reader(csvfile)

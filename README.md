@@ -1,4 +1,4 @@
-# Mediatjänster
-Github repository för SUNETs mediatjänster.  
-I regel kod för interaktion med tjänsternas API.  
-Hör av dig till media@sunet.se om du vill arbeta med att bidra till våra projekt.  
+# SUNET Mediatjänster
+Repository for SUNETs mediatjänster  
+Intended for codes interacting with Zoom and Kaltura API  
+Please contact <media@sunet.se> if you want to contribute    
