@@ -20,7 +20,7 @@ On *[Zoom Marketplace](https://marketplace.zoom.us/docs/guides/build/jwt-app)* c
 Edit config.json and paste API key and secret from your Zoom JWT App  
 
 # usage
-usage: oldzoomers [-e days] [-f csvfile] [b] [l] [o] [h]  
+usage: oldzoomers [-e days] [-f csvfile] [-b] [-l] [-o] [-h]  
     
 -h or --help  
 Show oldzoomers syntax
