@@ -53,18 +53,26 @@ def api_get_users(pagenumber):
     return json.loads(data)
     time.sleep(2)
 
-# Print usage syntax
+# Print oldzoomers syntax
 def help():
     # Print out instructions for usage
-    print("\nusage: oldzoomers [-l days] [-b csvfile]\n")
+    print("\nusage: oldzoomers [-e days] [-f csvfile] [-b] [-l] [-o] [-h]\n")
     print("                  Syntax:\n")
-    print("                  -l [n] or --list [n]")
-    print("                  Creates a csv file of users that have not logged into the service for n days\n")
-    print("                  -b [filename] or --basic [filename]")
-    print("                  Change license type to basic of users in a given csv file\n")
-    print("                  Enter your Zoom API key and secret to config.json\n")
+    print("                  -h or --help")
+    print("                  Show oldzoomers syntax\n")
+    print("                  -e [n] or --export [n]")
+    print("                  Export a csv file of users in your account that have not been logged in for n days\n")
+    print("                  -f [filename] or --file [filename]")
+    print("                  Give csv file of users to parse as input\n")
+    print("                  -b or --basic")
+    print("                  Change license type to basic\n")
+    print("                  -l or --licensed")
+    print("                  Change license type to licensed\n")
+    print("                  -o or --onprem")
+    print("                  Change license type to on-prem\n")
+    print("                  Append your Zoom API key and secret to config.json\n")
 
-# Write list of old users to csvfile
+# Write list of users not logged in for [n] days to csv file
 def write_csv_file(filename):
     pagecount=api_get_pagecount()
     page_number=1
@@ -105,7 +113,7 @@ def write_csv_file(filename):
                     last_login_time = datetime.strptime((user['last_login_time']), '%Y-%m-%dT%H:%M:%SZ')
                     last_login_time_append = last_login_time.strftime("%Y-%m-%d %H:%M:%S")
                     if license_type != 1 and last_login_time < last_login_days_setting:
-                        login_status = "Change to basic"
+                        login_status = "Change license type"
                         writeusers.writerow([email] + [last_login_time_append] + [login_status])
             print(" "+str(user_count))
         page_number=page_number+1
@@ -125,27 +133,80 @@ def api_change_license_type(email,type):
     data = res.read()
     print (data.decode("utf-8"))
 
+# Parse csv file
+def parse_csv_file(csv_file):
+    with open(csv_file, newline='') as csvfile:
+        users = reader(csvfile)
+        i=0
+        for row in users:
+            if row[0] != "e-mail":
+                try:
+                    if row[2] == "Check manually":
+                        answer=None
+                        while answer not in ("y", "Y", "n", "N"):
+                            print(row[0]+" should be checked manually. ")
+                            answer = input("Change to "+change_to_text+" anyway? (y/n): ")
+                            if answer == "y" or answer == "Y":
+                                api_change_license_type(row[0],change_to)
+                            elif answer =="n" or answer == "N":
+                                continue
+                            else:
+                                print("Please enter y/n")
+                except:
+                    print('no status')
+                try:
+                    if row[2] == "Change to basic":
+                        answer=None
+                        while answer not in ("y", "Y", "n", "N"):
+                            print("User: "+row[0])
+                            answer = input("Change to "+change_to_text+"? (y/n): ")
+                            if answer == "y" or answer == "Y":
+                                api_change_license_type(row[0],change_to)
+                            elif answer =="n" or answer == "N":
+                                continue
+                            else:
+                                print("Please enter y/n")
+                except:
+                    print('no status')
+                i=i+1
+
+# MAIN CODE
 
 if __name__ == "__main__":
 
+    # examine options given by user
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"hl:b:",["list=","basic="])
+        opts, args = getopt.getopt(sys.argv[1:],"e:f:bloh",["export=","file=","basic","licensed","onprem","help"])
     except getopt.GetoptError:
         help()
         sys.exit(2)
     for opt, arg in opts:
-        if opt == '-h':
+        if opt in ('-h', '--help'):
             help()
             sys.exit()
-        elif opt in ("-l", "--list"):
+        elif opt in ("-e", "--export"):
             last_login_days_setting = datetime.now() - timedelta(days=int(arg))
         elif opt in ("-b", "--basic"):
+            change_to=1
+            change_to_text="basic"
+        elif opt in ("-l", "--licensed"):
+            change_to=2
+            change_to_text="licensed"
+        elif opt in ("-o", "--onprem"):
+            change_to=3
+            change_to_text="on-prem"
+        elif opt in ("-f", "--file"):
             csv_input_file=arg
+        else:
+            usage()
+            sys.exit(2)
 
+    # are we going to create csv file?
     try:
         last_login_days_setting
     except NameError:
-        print("variable last_login_days_setting not defined. moving on!")
+        # variable last_login_days_setting not defined. moving on!
+        pass
     else:
         # Create variable with current date+time
         output_filename = '{}.csv'.format( datetime.now().strftime('%Y%m%d%H%M%S') )
@@ -153,41 +214,25 @@ if __name__ == "__main__":
         api_get_pagecount()    
         write_csv_file(output_filename)
     try:
-        csv_input_file
+        change_to
     except NameError:
-        print("variable csv_input_file not defined. moving on!")
+        # we're not going to change anyones license type
+        pass
     else:
-        with open(csv_input_file, newline='') as csvfile:
-            reader = reader(csvfile)
-            i=0
-            for row in reader:
-                if row[0] != "e-mail":
-                    try:
-                        if row[2] == "Check manually":
-                            answer=None
-                            while answer not in ("y", "Y", "n", "N"):
-                                print(row[0]+" should be checked manually. ")
-                                answer = input("Change to basic anyway? (y/n): ")
-                                if answer == "y" or answer == "Y":
-                                    api_change_license_type(row[0],1)
-                                elif answer =="n" or answer == "N":
-                                    continue
-                                else:
-                                    print("Please enter y/n")
-                    except:
-                        print('no status')
-                    try:
-                        if row[2] == "Change to basic":
-                            answer=None
-                            while answer not in ("y", "Y", "n", "N"):
-                                print("User: "+row[0])
-                                answer = input("Change to basic? (y/n): ")
-                                if answer == "y" or answer == "Y":
-                                    api_change_license_type(row[0],1)
-                                elif answer =="n" or answer == "N":
-                                    continue
-                                else:
-                                    print("Please enter y/n")
-                    except:
-                        print('no status')
-                    i=i+1
+        # was a csv file created? parse it
+        try:
+            output_filename
+        except NameError:
+            # No csv file has been created
+            pass
+        else:
+            parse_csv_file(output_filename)
+
+        # was a csv file given by user? parse it           
+        try:
+            csv_input_file
+        except NameError:
+            # variable csv_input_file not defined. moving on!
+            pass
+        else:
+            parse_csv_file(csv_input_file)
