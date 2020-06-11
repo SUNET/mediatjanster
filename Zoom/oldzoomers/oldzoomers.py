@@ -56,7 +56,7 @@ def api_get_users(pagenumber):
 # Print oldzoomers syntax
 def help():
     # Print out instructions for usage
-    print("\nusage: oldzoomers [-e days] [-f csvfile] [-b] [-l] [-o] [-h]\n")
+    print("\nusage: oldzoomers [-e days] [-f filename] [-b] [-l] [-o] [-h]\n")
     print("                  Syntax:\n")
     print("                  -h or --help")
     print("                  Show oldzoomers syntax\n")
@@ -155,7 +155,7 @@ def parse_csv_file(csv_file):
                 except:
                     print('no status')
                 try:
-                    if row[2] == "Change to basic":
+                    if row[2] == "Change license type":
                         answer=None
                         while answer not in ("y", "Y", "n", "N"):
                             print("User: "+row[0])
