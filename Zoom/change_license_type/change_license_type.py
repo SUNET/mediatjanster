@@ -53,13 +53,13 @@ def api_get_users(pagenumber):
     return json.loads(data)
     time.sleep(2)
 
-# Print oldzoomers syntax
+# Print change_license_type syntax
 def help():
     # Print out instructions for usage
-    print("\nusage: oldzoomers [-e days] [-f filename] [-b] [-l] [-o] [-h]\n")
+    print("\nusage: change_license_type [-e days] [-f filename] [-b] [-l] [-o] [-h]\n")
     print("                  Syntax:\n")
     print("                  -h or --help")
-    print("                  Show oldzoomers syntax\n")
+    print("                  Show syntax\n")
     print("                  -e [n] or --export [n]")
     print("                  Export a csv file of users in your account that have not been logged in for n days\n")
     print("                  -f [filename] or --file [filename]")
@@ -141,6 +141,13 @@ def parse_csv_file(csv_file):
         for row in users:
             if row[0] != "e-mail":
                 try:
+                    if answer_all == "y" or answer_all == "Y":
+                        api_change_license_type(row[0],change_to)
+                        continue
+                except:
+                    # dont change all
+                    pass
+                try:
                     if row[2] == "Check manually":
                         answer=None
                         while answer not in ("y", "Y", "n", "N"):
@@ -148,6 +155,7 @@ def parse_csv_file(csv_file):
                             answer = input("Change to "+change_to_text+" anyway? (y/n): ")
                             if answer == "y" or answer == "Y":
                                 api_change_license_type(row[0],change_to)
+                                answer_all = input("Answer yes to all? (y/n): ")
                             elif answer =="n" or answer == "N":
                                 continue
                             else:
@@ -162,6 +170,7 @@ def parse_csv_file(csv_file):
                             answer = input("Change to "+change_to_text+"? (y/n): ")
                             if answer == "y" or answer == "Y":
                                 api_change_license_type(row[0],change_to)
+                                answer_all = input("Answer yes to all? (y/n): ")
                             elif answer =="n" or answer == "N":
                                 continue
                             else:

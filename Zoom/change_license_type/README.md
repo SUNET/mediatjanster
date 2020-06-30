@@ -1,4 +1,4 @@
-# oldzoomers
+# change_license_type
 This code has two functions.
 1. Generate csv file with zoom users not logged in for [n] days
 2. Parse a csv file of users and change their license type (basic/licensed/on-prem)
@@ -20,10 +20,10 @@ On *[Zoom Marketplace](https://marketplace.zoom.us/docs/guides/build/jwt-app)* c
 Edit config.json and paste API key and secret from your Zoom JWT App  
 
 # usage
-usage: oldzoomers [-e days] [-f filename] [-b] [-l] [-o] [-h]  
+usage: change_license_type [-e days] [-f filename] [-b] [-l] [-o] [-h]  
     
 -h or --help  
-Show oldzoomers syntax
+Show syntax
 
 -e [n] or --export [n]  
 Export a csv file of users in your account that have not been logged in for n days
