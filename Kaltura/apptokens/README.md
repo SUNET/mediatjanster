@@ -1,5 +1,5 @@
 # add,remove,list kaltura apptokens
-read comments in code for usage
+read comments in code for usage.  
 basicly: 
   * Add KMC role
   * list roles with API to get roleid
