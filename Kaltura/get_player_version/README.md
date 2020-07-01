@@ -1,7 +1,7 @@
 # get player version
 Uses apptoken to list versions from the `html5Url` member of `KalturaUiConf` object and write them to `players.csv`    
 
-## Info
+## info
 
 Please note that players configured as auto-update will give you:  
 `/html5/html5lib/{latest}/mwEmbedLoader.php`    
@@ -15,11 +15,12 @@ Player version can also be seen in the browser dev-tools `console` tab on any pa
 Install KalturaApiClient library `pip3 install KalturaApiClient`  
 [Create apptoken](https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/application-tokens.html)  
 
-## Usage
 change session config in code 
 
     partner_id="your partner ID"  
     id="your apptokenid"  
     token="your apptoken"  
+
+## usage
 
 Run:  `python3 get_player_version.py` 
