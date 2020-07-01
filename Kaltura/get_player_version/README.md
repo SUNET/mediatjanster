@@ -1,4 +1,4 @@
-# list player versions
+# get player version
 Uses apptoken to list versions from the `html5Url` member of `KalturaUiConf` object and write them to `players.csv`    
 
 ## Info
