@@ -1,6 +1,6 @@
 
 # change owner
-Change owner of KaltruraBaseEntry clipped from a live event less than 4 minutes ago.   
+Change owner of KalturaBaseEntry clipped from a live event less than 4 minutes ago.   
 
 ## install and configure  
 [Install Python3](https://www.python.org/downloads/)   
