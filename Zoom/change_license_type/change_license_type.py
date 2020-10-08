@@ -34,7 +34,7 @@ def api_get_pagecount():
     
     res = conn.getresponse()
     data = res.read()
-    raw_data = json.loads(data)
+    raw_data = json.loads(data.decode('utf-8'))
     print('number of pages in API user import: '+str(raw_data['page_count']))
     return (raw_data['page_count'])
 
@@ -50,7 +50,7 @@ def api_get_users(pagenumber):
     
     res = conn.getresponse()
     data = res.read()
-    return json.loads(data)
+    return json.loads(data.decode('utf-8'))
     time.sleep(2)
 
 # Print change_license_type syntax
