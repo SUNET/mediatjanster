@@ -3,12 +3,9 @@ from datetime import datetime,timedelta
 from csv import writer,QUOTE_MINIMAL,reader
 from pathlib import Path
 
-# Get variables for API auth from configuration file config.json
-with open("config.json") as json_data_file:
-    data = json.load(json_data_file)
-    zoom_api_key = data['zoom_api_key']
-    zoom_api_secret = data['zoom_api_secret']
-    jwt_valid_seconds = data['jwt_valid_seconds']
+# Default config path (relative to where script is run)
+config="config.json"
+
 
 # FUNCTIONS
 
@@ -73,6 +70,8 @@ def help():
     print("                  Append your Zoom API key and secret to config.json\n")
     print("                  -a or --assume-yes")
     print("                  Assume yes, necessary for running headless\n")
+    print("                  -j [filename] or --json-file [filename]")
+    print("                  Add optional filepath for config.json\n")
 
 # Write list of users not logged in for [n] days to csv file
 def write_csv_file(filename):
@@ -185,11 +184,13 @@ def parse_csv_file(csv_file):
 
 # MAIN CODE
 
+
+
 if __name__ == "__main__":
 
     # examine options given by user
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"e:f:bloha",["export=","file=","basic","licensed","onprem","help","assume-yes"])
+        opts, args = getopt.getopt(sys.argv[1:],"e:f:j:bloha",["export=","file=","basic","licensed","onprem","help","assume-yes","json-file="])
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -210,11 +211,20 @@ if __name__ == "__main__":
             change_to_text="on-prem"
         elif opt in ("-f", "--file"):
             csv_input_file=arg
+        elif opt in ("-j", "--json-file"):
+            config=arg
         elif opt in ("-a", "--assume-yes"):
             answer_all="y"
         else:
             usage()
             sys.exit(2)
+
+# Get variables for API auth from configuration file config.json
+with open(config) as json_data_file:
+    data = json.load(json_data_file)
+    zoom_api_key = data['zoom_api_key']
+    zoom_api_secret = data['zoom_api_secret']
+    jwt_valid_seconds = data['jwt_valid_seconds']
 
     # are we going to create csv file?
     try:
