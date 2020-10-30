@@ -71,6 +71,8 @@ def help():
     print("                  -o or --onprem")
     print("                  Change license type to on-prem\n")
     print("                  Append your Zoom API key and secret to config.json\n")
+    print("                  -a or --assume-yes")
+    print("                  Assume yes, necessary for running headless\n")
 
 # Write list of users not logged in for [n] days to csv file
 def write_csv_file(filename):
@@ -140,7 +142,9 @@ def parse_csv_file(csv_file):
         i=0
         for row in users:
             if row[0] != "e-mail":
+                global answer_all
                 try:
+                    print(row[0])
                     if answer_all == "y" or answer_all == "Y":
                         api_change_license_type(row[0],change_to)
                         continue
@@ -185,7 +189,7 @@ if __name__ == "__main__":
 
     # examine options given by user
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"e:f:bloh",["export=","file=","basic","licensed","onprem","help"])
+        opts, args = getopt.getopt(sys.argv[1:],"e:f:bloha",["export=","file=","basic","licensed","onprem","help","assume-yes"])
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -206,6 +210,8 @@ if __name__ == "__main__":
             change_to_text="on-prem"
         elif opt in ("-f", "--file"):
             csv_input_file=arg
+        elif opt in ("-a", "--assume-yes"):
+            answer_all="y"
         else:
             usage()
             sys.exit(2)
