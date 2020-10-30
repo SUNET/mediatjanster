@@ -190,7 +190,7 @@ if __name__ == "__main__":
 
     # examine options given by user
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"e:f:j:bloha",["export=","file=","basic","licensed","onprem","help","assume-yes","json-file="])
+        opts, args = getopt.getopt(sys.argv[1:],"e:f:j:c:bloha",["export=","file=","basic","licensed","onprem","help","assume-yes","json-file=","csv-file="])
     except getopt.GetoptError:
         help()
         sys.exit(2)
@@ -213,6 +213,8 @@ if __name__ == "__main__":
             csv_input_file=arg
         elif opt in ("-j", "--json-file"):
             config=arg
+        elif opt in ("-c", "--csv-file"):
+            csv_output_file=arg
         elif opt in ("-a", "--assume-yes"):
             answer_all="y"
         else:
@@ -233,8 +235,13 @@ with open(config) as json_data_file:
         # variable last_login_days_setting not defined. moving on!
         pass
     else:
-        # Create variable with current date+time
-        output_filename = '{}.csv'.format( datetime.now().strftime('%Y%m%d%H%M%S') )
+        # Create variable with current date+time unless predefined
+        print(csv_output_file)
+        try: 
+            csv_output_file
+            output_filename=csv_output_file
+        except NameError:
+            output_filename = '{}.csv'.format( datetime.now().strftime('%Y%m%d%H%M%S') )
         print('List of users will be written to: '+output_filename)
         api_get_pagecount()    
         write_csv_file(output_filename)
