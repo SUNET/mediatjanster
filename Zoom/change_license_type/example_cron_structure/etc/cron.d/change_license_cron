@@ -1,0 +1,2 @@
+# Run job at 05:00 every day
+0 5 * * *   root   /local/zoom/scripts/change_license.sh

@@ -1,0 +1,5 @@
+{
+    "zoom_api_key":"%%KEY%%",
+    "zoom_api_secret":"%%SECRET%%",
+    "jwt_valid_seconds":30
+}
