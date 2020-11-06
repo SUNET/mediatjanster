@@ -72,6 +72,9 @@ def help():
     print("                  Assume yes, necessary for running headless\n")
     print("                  -j [filename] or --json-file [filename]")
     print("                  Add optional filepath for config.json\n")
+    print("                  -c [filename] or --csv-file [filename]")
+    print("                  exported filename of csv-file\n")
+
 
 # Write list of users not logged in for [n] days to csv file
 def write_csv_file(filename):

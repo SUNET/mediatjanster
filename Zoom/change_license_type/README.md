@@ -40,3 +40,11 @@ Change license type to licensed
 -o or --onprem
 Change license type to on-prem
 
+-a or --assume-yes")
+Assume yes, necessary for running headless\n")
+
+-j [filename] or --json-file [filename]")
+Add optional filepath for config.json\n")
+
+-c [filename] or --csv-file [filename]")
+exported filename of csv-file\n")
