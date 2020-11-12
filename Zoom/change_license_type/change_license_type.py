@@ -197,6 +197,11 @@ if __name__ == "__main__":
     except getopt.GetoptError:
         help()
         sys.exit(2)
+    try:
+        sys.argv[1]
+    except:
+        help()
+        sys.exit(2)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
             help()
@@ -220,9 +225,6 @@ if __name__ == "__main__":
             csv_output_file=arg
         elif opt in ("-a", "--assume-yes"):
             answer_all="y"
-        else:
-            usage()
-            sys.exit(2)
 
 # Get variables for API auth from configuration file config.json
 with open(config) as json_data_file:
@@ -239,7 +241,6 @@ with open(config) as json_data_file:
         pass
     else:
         # Create variable with current date+time unless predefined
-        print(csv_output_file)
         try: 
             csv_output_file
             output_filename=csv_output_file
