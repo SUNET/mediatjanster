@@ -20,7 +20,7 @@ On *[Zoom Marketplace](https://marketplace.zoom.us/docs/guides/build/jwt-app)* c
 Edit config.json and paste API key and secret from your Zoom JWT App
 
 # usage
-usage: change_license_type [-e days] [-f filename] [-b] [-l] [-o] [-h]
+`python3 change_license_type [-e days] [-f filename] [-b] [-l] [-o] [-h] [-j configfile] [-c output_filename]`
 
 -h or --help
 Show syntax
@@ -40,11 +40,11 @@ Change license type to licensed
 -o or --onprem
 Change license type to on-prem
 
--a or --assume-yes")
-Assume yes, necessary for running headless\n")
+-a or --assume-yes  
+Assume yes, necessary for running headless  
 
--j [filename] or --json-file [filename]")
-Add optional filepath for config.json\n")
+-j [filename] or --json-file [filename]  
+Add optional filepath for config.json  
 
--c [filename] or --csv-file [filename]")
-exported filename of csv-file\n")
+-c [filename] or --csv-file [filename]  
+exported filename of csv-file  
