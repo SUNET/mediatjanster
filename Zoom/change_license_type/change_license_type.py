@@ -22,7 +22,7 @@ def get_jwt():
 
 # Get the page count for list of Zoom users in your account
 def api_get_pagecount():
-    conn = http.client.HTTPSConnection("api.zoom.us")
+    conn = http.client.HTTPSConnection("eu01api-www4local.zoom.us")
     headers = {
         "authorization": "Bearer " + get_jwt(),
         "content-type": "application/json",
@@ -39,7 +39,7 @@ def api_get_pagecount():
 
 # Get all users (300) from a specific page
 def api_get_users(pagenumber):
-    conn = http.client.HTTPSConnection("api.zoom.us")
+    conn = http.client.HTTPSConnection("eu01api-www4local.zoom.us")
     headers = {
         "authorization": "Bearer " + get_jwt(),
         "content-type": "application/json",
@@ -144,7 +144,7 @@ def write_csv_file(filename):
 
 # Change user type. Available type parameters: 1=basic, 2=licensed, 3=onpremise
 def api_change_license_type(email, type):
-    conn = http.client.HTTPSConnection("api.zoom.us")
+    conn = http.client.HTTPSConnection("eu01api-www4local.zoom.us")
     headers = {
         "authorization": "Bearer " + get_jwt(),
         "content-type": "application/json",
