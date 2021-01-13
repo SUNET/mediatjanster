@@ -4,7 +4,7 @@ from csv import writer, QUOTE_MINIMAL, reader
 from pathlib import Path
 
 # Default config path (relative to where script is run)
-config = "config.json"
+CONFIG = "config.json"
 
 
 # FUNCTIONS
@@ -136,11 +136,11 @@ def parse_csv_file(csv_file):
         i = 0
         for row in users:
             if row[0] != "e-mail":
-                global answer_all
+                global ANSWER_ALL
                 try:
                     print(row[0])
-                    if answer_all == "y" or answer_all == "Y":
-                        api_change_license_type(row[0], change_to)
+                    if ANSWER_ALL == "y" or ANSWER_ALL == "Y":
+                        api_change_license_type(row[0], CHANGE_TO)
                         continue
                 except:
                     # dont change all
@@ -151,11 +151,11 @@ def parse_csv_file(csv_file):
                         while answer not in ("y", "Y", "n", "N"):
                             print(row[0] + " should be checked manually. ")
                             answer = input(
-                                "Change to " + change_to_text + " anyway? (y/n): "
+                                "Change to " + CHANGE_TO_TEXT + " anyway? (y/n): "
                             )
                             if answer == "y" or answer == "Y":
-                                api_change_license_type(row[0], change_to)
-                                answer_all = input("Answer yes to all? (y/n): ")
+                                api_change_license_type(row[0], CHANGE_TO)
+                                ANSWER_ALL = input("Answer yes to all? (y/n): ")
                             elif answer == "n" or answer == "N":
                                 continue
                             else:
@@ -167,10 +167,10 @@ def parse_csv_file(csv_file):
                         answer = None
                         while answer not in ("y", "Y", "n", "N"):
                             print("User: " + row[0])
-                            answer = input("Change to " + change_to_text + "? (y/n): ")
+                            answer = input("Change to " + CHANGE_TO_TEXT + "? (y/n): ")
                             if answer == "y" or answer == "Y":
-                                api_change_license_type(row[0], change_to)
-                                answer_all = input("Answer yes to all? (y/n): ")
+                                api_change_license_type(row[0], CHANGE_TO)
+                                ANSWER_ALL = input("Answer yes to all? (y/n): ")
                             elif answer == "n" or answer == "N":
                                 continue
                             else:
@@ -202,25 +202,25 @@ if __name__ == "__main__":
     if opts.export:
         last_login_days_setting = datetime.now() - timedelta(days=opts.export)
     elif opts.basic:
-        change_to = 1
-        change_to_text = "basic"
+        CHANGE_TO = 1
+        CHANGE_TO_TEXT = "basic"
     elif opts.licensed:
-        change_to = 2
-        change_to_text = "licensed"
+        CHANGE_TO = 2
+        CHANGE_TO_TEXT = "licensed"
     elif opts.onprem:
-        change_to = 3
-        change_to_text = "on-prem"
+        CHANGE_TO = 3
+        CHANGE_TO_TEXT = "on-prem"
     elif opts.file:
         csv_input_file = opts.file
     elif opts.json_file:
-        config = opts.json_file
+        CONFIG = opts.json_file
     elif opts.csv_file:
         csv_output_file = opts.csv_file
     elif opts.assume_yes:
-        answer_all = "y"
+        ANSWER_ALL = "y"
 
     # Get variables for API auth from configuration file config.json
-    with open(config) as json_data_file:
+    with open(CONFIG) as json_data_file:
         data = json.load(json_data_file)
         zoom_api_key = data["zoom_api_key"]
         zoom_api_secret = data["zoom_api_secret"]
@@ -243,7 +243,7 @@ if __name__ == "__main__":
             api_get_pagecount()
             write_csv_file(output_filename)
         try:
-            change_to
+            CHANGE_TO
         except NameError:
             # we're not going to change anyones license type
             pass
