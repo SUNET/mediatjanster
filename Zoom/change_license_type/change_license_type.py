@@ -1,4 +1,4 @@
-import json, sys, http.client, time, getopt, jwt
+import json, sys, http.client, time, argparse, jwt
 from datetime import datetime, timedelta
 from csv import writer, QUOTE_MINIMAL, reader
 from pathlib import Path
@@ -55,35 +55,6 @@ def api_get_users(pagenumber):
     data = res.read()
     return json.loads(data.decode("utf-8"))
     time.sleep(2)
-
-
-# Print change_license_type syntax
-def help():
-    # Print out instructions for usage
-    print("\nusage: change_license_type [-e days] [-f filename] [-b] [-l] [-o] [-h]\n")
-    print("                  Syntax:\n")
-    print("                  -h or --help")
-    print("                  Show syntax\n")
-    print("                  -e [n] or --export [n]")
-    print(
-        "                  Export a csv file of users in your account that have not been logged in for n days\n"
-    )
-    print("                  -f [filename] or --file [filename]")
-    print("                  Give csv file of users to parse as input\n")
-    print("                  -b or --basic")
-    print("                  Change license type to basic\n")
-    print("                  -l or --licensed")
-    print("                  Change license type to licensed\n")
-    print("                  -o or --onprem")
-    print("                  Change license type to on-prem\n")
-    print("                  Append your Zoom API key and secret to config.json\n")
-    print("                  -a or --assume-yes")
-    print("                  Assume yes, necessary for running headless\n")
-    print("                  -j [filename] or --json-file [filename]")
-    print("                  Add optional filepath for config.json\n")
-    print("                  -c [filename] or --csv-file [filename]")
-    print("                  exported filename of csv-file\n")
-
 
 # Write list of users not logged in for [n] days to csv file
 def write_csv_file(filename):
@@ -214,54 +185,39 @@ def parse_csv_file(csv_file):
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser(description="change zoom license type")
+    parser.add_argument("-e", "--export", help="export csv file", type=int)
+    parser.add_argument("-f", "--file", help="give csv file of users to parse as input")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-b", "--basic", help="change license type to basic", action="store_true")
+    group.add_argument("-l", "--licensed", help="change license type to licensed", action="store_true")
+    group.add_argument("-o", "--onprem", help="change license type to on-prem", action="store_true")
+    parser.add_argument("-a", "--assume-yes", help="assume yes, necessary for running headless", action="store_true")
+    parser.add_argument("-j", "--json-file", help="add optional filepath for config.json")
+    parser.add_argument("-c", "--csv-file", help="exported filename of csv-file", type=str)
+    opts = parser.parse_args()
+
     # examine options given by user
-    try:
-        opts, args = getopt.getopt(
-            sys.argv[1:],
-            "e:f:j:c:bloha",
-            [
-                "export=",
-                "file=",
-                "basic",
-                "licensed",
-                "onprem",
-                "help",
-                "assume-yes",
-                "json-file=",
-                "csv-file=",
-            ],
-        )
-    except getopt.GetoptError:
-        help()
-        sys.exit(2)
-    try:
-        sys.argv[1]
-    except:
-        help()
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-            help()
-            sys.exit()
-        elif opt in ("-e", "--export"):
-            last_login_days_setting = datetime.now() - timedelta(days=int(arg))
-        elif opt in ("-b", "--basic"):
-            change_to = 1
-            change_to_text = "basic"
-        elif opt in ("-l", "--licensed"):
-            change_to = 2
-            change_to_text = "licensed"
-        elif opt in ("-o", "--onprem"):
-            change_to = 3
-            change_to_text = "on-prem"
-        elif opt in ("-f", "--file"):
-            csv_input_file = arg
-        elif opt in ("-j", "--json-file"):
-            config = arg
-        elif opt in ("-c", "--csv-file"):
-            csv_output_file = arg
-        elif opt in ("-a", "--assume-yes"):
-            answer_all = "y"
+
+    if opts.export:
+        last_login_days_setting = datetime.now() - timedelta(days=opts.export)
+    elif opts.basic:
+        change_to = 1
+        change_to_text = "basic"
+    elif opts.licensed:
+        change_to = 2
+        change_to_text = "licensed"
+    elif opts.onprem:
+        change_to = 3
+        change_to_text = "on-prem"
+    elif opts.file:
+        csv_input_file = opts.file
+    elif opts.json_file:
+        config = opts.json_file
+    elif opts.csv_file:
+        csv_output_file = opts.csv_file
+    elif opts.assume_yes:
+        answer_all = "y"
 
     # Get variables for API auth from configuration file config.json
     with open(config) as json_data_file:
