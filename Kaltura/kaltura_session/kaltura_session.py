@@ -11,7 +11,7 @@ group = parser.add_mutually_exclusive_group()
 group.add_argument("-s", "--start", help="start session", action="store_true")
 group.add_argument("-e", "--end", help="end session", action="store_true")
 group.add_argument("-g", "--get", help="get session", action="store_true")
-parser.add_argument("-c", "--client-tag", help="client tag")
+parser.add_argument("-c", "--client-tag", help="client tag", metavar="client-tag")
 args = parser.parse_args()
 if args.start:
     partnerId = input("Enter partnerId: ")
