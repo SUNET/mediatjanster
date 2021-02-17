@@ -7,10 +7,15 @@ Kalturasession can be generated using:
 2. apptoken
 
 ### User interface
+filemenu  
 ![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_filemenu.png)  
-![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_partnerid.png)
-![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_adminsecret.png)
-![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_download.png)
+
+start kaltura session using partnerid...
+![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_partnerid.png)  
+...and admin secret  
+![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_adminsecret.png)  
+files are downloading!  
+![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_download.png)  
 
 ### Usage
 Install Python3 >= 3.8.5
