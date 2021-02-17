@@ -10,7 +10,7 @@ Kalturasession can be generated using:
 filemenu  
 ![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_filemenu.png)  
 
-start kaltura session using partnerid...
+start kaltura session using partnerid...  
 ![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_partnerid.png)  
 ...and admin secret  
 ![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_adminsecret.png)  
