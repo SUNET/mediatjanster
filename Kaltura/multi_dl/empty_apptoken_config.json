@@ -1,0 +1,6 @@
+{
+    "api_token_id": "your apptokenid here",
+    "api_token": "your apptoken here",
+    "kaltura_partnerid": "your partnerid here",
+    "kaltura_serviceurl": "https://api.kaltura.nordu.net/"
+}
