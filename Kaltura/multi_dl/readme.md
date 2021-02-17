@@ -18,6 +18,6 @@ files are downloading!
 ![alt text](https://raw.githubusercontent.com/SUNET/mediatjanster/master/Kaltura/multi_dl/images/multidl_download.png)  
 
 ### Usage
-Install Python3 >= 3.8.5
-Install python modules  `pip3 install -r requirements.txt`
-Run program  `python3 multi_dl.py`
+Install Python3 >= 3.8.5  
+Install python modules  `pip3 install -r requirements.txt`  
+Run program  `python3 multi_dl.py`  
