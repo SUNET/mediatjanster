@@ -91,7 +91,8 @@ def add_app_token(args):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Helper for Kaltura apptokens")
-    subparsers = parser.add_subparsers(help="sub-command help")
+    subparsers = parser.add_subparsers(dest="function", help="sub-command help")
+    subparsers.required = True
     parser_add = subparsers.add_parser("add", help="add appToken")
     parser_add.add_argument("desc", help="appToken description", type=str)
     parser_add.add_argument("kmcrole", help="appToken description", type=str)
