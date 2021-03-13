@@ -7,7 +7,7 @@ from KalturaClient.exceptions import KalturaException
 
 
 parser = argparse.ArgumentParser(description="Helper for kaltura sessions")
-group = parser.add_mutually_exclusive_group()
+group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-s", "--start", help="start session", action="store_true")
 group.add_argument("-e", "--end", help="end session", action="store_true")
 group.add_argument("-g", "--get", help="get session", action="store_true")
