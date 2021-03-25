@@ -201,22 +201,22 @@ if __name__ == "__main__":
 
     if opts.export:
         last_login_days_setting = datetime.now() - timedelta(days=opts.export)
-    elif opts.basic:
+    if opts.basic:
         CHANGE_TO = 1
         CHANGE_TO_TEXT = "basic"
-    elif opts.licensed:
+    if opts.licensed:
         CHANGE_TO = 2
         CHANGE_TO_TEXT = "licensed"
-    elif opts.onprem:
+    if opts.onprem:
         CHANGE_TO = 3
         CHANGE_TO_TEXT = "on-prem"
-    elif opts.file:
+    if opts.file:
         csv_input_file = opts.file
-    elif opts.json_file:
+    if opts.json_file:
         CONFIG = opts.json_file
-    elif opts.csv_file:
+    if opts.csv_file:
         csv_output_file = opts.csv_file
-    elif opts.assume_yes:
+    if opts.assume_yes:
         ANSWER_ALL = "y"
 
     # Get variables for API auth from configuration file config.json
