@@ -15,8 +15,7 @@ def get_jwt():
         "iss": zoom_api_key,
         "exp": datetime.now() + timedelta(seconds=jwt_valid_seconds),
     }
-    result = str(jwt.encode(payload, zoom_api_secret))
-    result = result[2:-1]
+    result = jwt.encode(payload, zoom_api_secret)
     return result
 
 
