@@ -20,4 +20,4 @@ On *[Zoom Marketplace](https://marketplace.zoom.us/docs/guides/build/jwt-app)* c
 Edit config.json and paste API key and secret from your Zoom JWT App  
 
 ## usage
-`python3 change_license_type -h`
+`python3 change_license_type.py -h`
