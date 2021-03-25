@@ -185,15 +185,15 @@ def parse_csv_file(csv_file):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="change zoom license type")
-    parser.add_argument("-e", "--export", help="export csv file", type=int)
-    parser.add_argument("-f", "--file", help="give csv file of users to parse as input")
+    parser.add_argument("-e", "--export", help="export csv file", type=int, metavar="days")
+    parser.add_argument("-f", "--file", help="give csv file of users to parse as input", metavar="file")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-b", "--basic", help="change license type to basic", action="store_true")
     group.add_argument("-l", "--licensed", help="change license type to licensed", action="store_true")
     group.add_argument("-o", "--onprem", help="change license type to on-prem", action="store_true")
     parser.add_argument("-a", "--assume-yes", help="assume yes, necessary for running headless", action="store_true")
-    parser.add_argument("-j", "--json-file", help="add optional filepath for config.json")
-    parser.add_argument("-c", "--csv-file", help="exported filename of csv-file", type=str)
+    parser.add_argument("-j", "--json-file", help="add optional filepath for config.json", metavar="file")
+    parser.add_argument("-c", "--csv-file", help="exported filename of csv-file", type=str, metavar="file")
     opts = parser.parse_args()
 
     # examine options given by user
