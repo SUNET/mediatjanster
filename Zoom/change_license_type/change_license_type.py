@@ -247,15 +247,6 @@ if __name__ == "__main__":
             # we're not going to change anyones license type
             pass
         else:
-            # was a csv file created? parse it
-            try:
-                output_filename
-            except NameError:
-                # No csv file has been created
-                pass
-            else:
-                parse_csv_file(output_filename)
-
             # was a csv file given by user? parse it
             try:
                 csv_input_file
@@ -264,3 +255,13 @@ if __name__ == "__main__":
                 pass
             else:
                 parse_csv_file(csv_input_file)
+
+            if csv_input_file is None:
+                # was a csv file created? parse it
+                try:
+                    output_filename
+                except NameError:
+                    # No csv file has been created
+                    pass
+                else:
+                    parse_csv_file(output_filename)
