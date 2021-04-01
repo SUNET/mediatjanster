@@ -21,7 +21,6 @@ if args.start:
     kc = KalturaClient(conf)
     kc.clientConfiguration["clientTag"] = args.client_tag
     ks = kc.session.start(adminSecret, None, 2, partnerId)
-    kc.setKs(ks)
     print("New kalturaSession: " + ks)
 elif args.get:
     kalturaSession = input("Enter kalturaSession: ")
